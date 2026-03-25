@@ -1,5 +1,4 @@
-Last login: Tue Mar 17 15:55:40 on ttys000
-Welcome, Nawaf!
+
 nawafadel@Nawafs-MacBook-Air ~ % cd Desktop
 mkdir stock-app
 cd stock-app
