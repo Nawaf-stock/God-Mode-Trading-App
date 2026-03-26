@@ -1,8 +1,6 @@
 
 stock-app
-touch app.p open -e app.py 
-nawafadel@Nawafs-MacBook-Air stock-app % >....                                  
-
+stock-app % >....                                  
     # --- PAPER TRADING ---
     st.subheader("💸 Paper Trading")
 
