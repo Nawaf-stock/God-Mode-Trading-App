@@ -1,6 +1,5 @@
 
-
-cd stock-app
+stock-app
 touch app.p open -e app.py 
 nawafadel@Nawafs-MacBook-Air stock-app % >....                                  
 
