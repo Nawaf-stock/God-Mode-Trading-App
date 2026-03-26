@@ -1,6 +1,5 @@
 
-nawafadel@Nawafs-MacBook-Air ~ % cd Desktop
-mkdir stock-app
+
 cd stock-app
 touch app.p open -e app.py 
 nawafadel@Nawafs-MacBook-Air stock-app % >....                                  
