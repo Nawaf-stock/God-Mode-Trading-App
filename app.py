@@ -1,23 +1,16 @@
+import streamlit as st
+import yfinance as yf
+import pandas as pd
 
-stock-app
-stock-app % >....                                  
-    # --- PAPER TRADING ---
-    st.subheader("💸 Paper Trading")
+st.title("God Mode Trading App 📈")
 
-    st.write(f"Balance: ${round(st.session_state.money,2)}")
+ticker = st.text_input("Enter Stock Ticker", "AAPL")
 
-    qty = st.number_input("Shares", 1, 100, 1)
+if ticker:
+    data = yf.download(ticker, period="1y")
 
-    if st.button("Buy"):
-        cost = price * qty
-        if st.session_state.money >= cost:
-            st.session_state.money -= cost
-            st.session_state.portfolio[ticker] = st.session_state.portfolio.get(ticker, 0) + qty
+    st.subheader("Stock Price Chart")
+    st.line_chart(data["Close"])
 
-    if st.button("Sell"):
-        if ticker in st.session_state.portfolio and st.session_state.portfolio[ticker] >= qty:
-            st.session_state.money += price * qty
-            st.session_state.portfolio[ticker] -= qty
-
-    st.write("📦 Portfolio:")
-    st.write(st.session_state.portfolio)
+    st.subheader("Recent Data")
+    st.write(data.tail())
