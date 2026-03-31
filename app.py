@@ -2,15 +2,21 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 
-st.title("Peak Trading App 📈")
+st.title("Very useful Trading App")
 
 ticker = st.text_input("Enter Stock Ticker", "AAPL")
 
-if ticker:
-    data = yf.download(ticker, period="1y")
+data = yf.download(ticker, period="1y")
 
-    st.subheader("Stock Price Chart")
-    st.line_chart(data["Close"])
+st.line_chart(data["Close"])
 
-    st.subheader("Recent Data")
-    st.write(data.tail())
+# Moving averages
+data["MA20"] = data["Close"].rolling(20).mean()
+data["MA50"] = data["Close"].rolling(50).mean()
+
+if data["MA20"].iloc[-1] > data["MA50"].iloc[-1]:
+    st.success("Prediction: Stock may go UP 📈")
+else:
+    st.error("Prediction: Stock may go DOWN 📉")
+
+st.write(data.tail())
