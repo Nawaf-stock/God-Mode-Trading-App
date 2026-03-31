@@ -39,6 +39,25 @@ st.divider()
 
 # --- PART 2: WATCHLIST ---
 st.subheader("⭐ Watchlist")
+watchlist_input = st.text_input("Enter tickers (e.g., AAPL, TSLA, 2222)", "AAPL, TSLA, 2222")
+
+if watchlist_input:
+    tickers = [t.strip() for t in watchlist_input.split(",")]
+    cols = st.columns(len(tickers))
+    
+    for i, t in enumerate(tickers):
+        symbol = t + ".SR" if t.isdigit() else t
+        w_data = yf.download(symbol, period="1d")
+        
+        if not w_data.empty:
+            price = round(float(w_data["Close"].iloc[-1]), 2)
+            cols[i].metric(symbol, price)
+        else:
+            cols[i].write(f"{symbol} ❌")
+st.divider()
+
+# --- PART 2: WATCHLIST ---
+st.subheader("⭐ Watchlist")
 watchlist_input = st.text_input("Enter tickers separated by commas", "AAPL, TSLA, 2222")
 
 if watchlist_input:
