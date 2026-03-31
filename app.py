@@ -2,7 +2,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 
-st.title("God Mode Trading App 📈")
+st.title("Peak Trading App 📈")
 
 ticker = st.text_input("Enter Stock Ticker", "AAPL")
 
