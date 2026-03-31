@@ -55,7 +55,8 @@ if watchlist:
 
         if not d.empty:
             price = round(d["Close"].iloc[-1], 2)
-            st.write(f"{t}: {price}")else:
+            st.write(f"{t}: {price}")
+        else:
     st.warning("Stock ticker not found.")
 
 st.divider()
