@@ -23,7 +23,6 @@ if not data.empty:
     data["MA20"] = data["Close"].rolling(20).mean()
     data["MA50"] = data["Close"].rolling(50).mean()
 
-    # Only show MA chart if enough data
     if len(data) > 50:
         st.subheader("Trend Indicators")
         st.line_chart(data[["Close", "MA20", "MA50"]])
@@ -34,7 +33,28 @@ if not data.empty:
             st.error("Prediction: Stock may go DOWN 📉")
 
     st.metric("Current Price", round(float(data["Close"].iloc[-1]), 2))
+else:
+    st.warning("Stock ticker not found. Try another one.")
 
+st.divider()
+
+# Watchlist Section
+st.subheader("⭐ Watchlist")
+watchlist_input = st.text_input("Enter tickers separated by commas", "AAPL, TSLA, 2222")
+
+if watchlist_input:
+    tickers = [t.strip() for t in watchlist_input.split(",")]
+    cols = st.columns(len(tickers))
+    
+    for i, t in enumerate(tickers):
+        symbol = t + ".SR" if t.isdigit() else t
+        w_data = yf.download(symbol, period="1d")
+        
+        if not w_data.empty:
+            price = round(float(w_data["Close"].iloc[-1]), 2)
+            cols[i].metric(symbol, price)
+        else:
+            cols[i].write(f"{symbol} ❌")
 else:
     st.warning("Stock ticker not found. Try another one.")
 
