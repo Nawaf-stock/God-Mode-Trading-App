@@ -1,40 +1,22 @@
-import streamlit as st
-import yfinance as yf
-import pandas as pd
+# Watchlist Section
+st.subheader("⭐ Watchlist")
+watchlist_input = st.text_input("Enter tickers separated by commas", "AAPL, TSLA, 2222")
 
-st.set_page_config(page_title="Peak Trading Dashboard", page_icon="📈")
-
-st.title("Peak Trading Dashboard 📈")
-st.write("Supports US 🇺🇸 and Saudi 🇸🇦 stocks")
-
-ticker = st.text_input("Enter Stock Ticker", "AAPL")
-
-# Saudi stock fix
-if ticker.isdigit():
-    ticker = ticker + ".SR"
-
-data = yf.download(ticker, period="1y")
-
-if not data.empty:
-    st.subheader("Price Chart")
-    st.line_chart(data["Close"])
-
-    # Moving averages
-    data["MA20"] = data["Close"].rolling(20).mean()
-    data["MA50"] = data["Close"].rolling(50).mean()
-
-    if len(data) > 50:
-        st.subheader("Trend Indicators")
-        st.line_chart(data[["Close", "MA20", "MA50"]])
-
-        if data["MA20"].iloc[-1] > data["MA50"].iloc[-1]:
-            st.success("Prediction: Stock may go UP 📈")
+if watchlist_input:
+    tickers = [t.strip() for t in watchlist_input.split(",")]
+    cols = st.columns(len(tickers))
+    
+    for i, t in enumerate(tickers):
+        # Determine if it's a Saudi or US stock
+        symbol = t + ".SR" if t.isdigit() else t
+        w_data = yf.download(symbol, period="1d")
+        
+        if not w_data.empty:
+            price = round(float(w_data["Close"].iloc[-1]), 2)
+            cols[i].metric(symbol, price)
         else:
-            st.error("Prediction: Stock may go DOWN 📉")
-
-    st.metric("Current Price", round(float(data["Close"].iloc[-1]), 2))
-else:
-    st.warning("Stock ticker not found. Try another one.")
+            # This was the line causing your error
+            cols[i].write(f"{symbol} ❌")    st.warning("Stock ticker not found. Try another one.")
 
 st.divider()
 
