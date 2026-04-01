@@ -30,7 +30,8 @@ if not data.empty:
         else:
             st.error("Prediction: Stock may go DOWN 📉")
 
-    st.metric("Current Price", round(float(data["Close"].iloc[-1]), 2))
+    price = data["Close"].iloc[-1]
+st.metric("Current Price", round(price, 2))
 else:
     st.warning("Stock ticker not found. Try another one.")
 
