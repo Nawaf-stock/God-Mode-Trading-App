@@ -2,7 +2,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 
-st.title("God Mode Trading Dashboard 📈")
+st.title("Nawaf's Trading Dashboard 📈")
 st.write("US 🇺🇸 + Saudi 🇸🇦 stocks supported")
 
 ticker_input = st.text_input("Enter stock ticker", "AAPL")
