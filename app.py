@@ -24,7 +24,6 @@ if not data.empty:
 
     if len(data) > 50:
         st.subheader("Trend Indicators")
-        st.line_chart(data[["Close", "MA20", "MA50"]])
 
         if data["MA20"].iloc[-1] > data["MA50"].iloc[-1]:
             st.success("Prediction: Stock may go UP 📈")
